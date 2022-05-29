@@ -78,7 +78,6 @@ export default {
           draggable: true,
         }).addTo(this.map);
                   alert(clickMarker)
-
       });
     },
     goToNewLocation() {
