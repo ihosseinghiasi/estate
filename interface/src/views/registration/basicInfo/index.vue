@@ -66,15 +66,14 @@
       </div>
     </div>
     <div class="BasicInfoDirectionArea">
-      <router-link to="/reg/sell">
-        <b-button variant="outline-info"> صفحه بعد </b-button>
-      </router-link>
+      <b-button variant="outline-info" @click="checkType"> صفحه بعد </b-button>
+      <b-button class="exitButton" variant="light" to="/"> خروج </b-button>
     </div>
   </div>
 </template>
 
 <script>
-import Header from '../../../../layouts/Header';
+import Header from '../../../../layouts/HeaderWithoutButton';
 export default {
   name: 'BasicInfo',
   components: {Header},
@@ -92,12 +91,21 @@ export default {
         {text: 'برج', value: 'btnTower'},
         {text: 'آپارتمانی', value: 'btnapartment'},
       ],
-      selContract: 'btnBuy',
+      selContract: 'btnSell',
       optContract: [
         {text: 'رهن و اجاره', value: 'btnRent'},
-        {text: 'خرید', value: 'btnBuy'},
+        {text: 'خرید', value: 'btnSell'},
       ],
     };
+  },
+  methods: {
+    checkType() {
+      if (this.selContract == 'btnRent') {
+        this.$router.push('/reg/rent');
+      } else {
+        this.$router.push('/reg/sell');
+      }
+    },
   },
 };
 </script>
@@ -148,15 +156,21 @@ input[type='radio'] {
 
 .BasicInfoDirectionArea {
   position: relative;
-  height: 50px;
+  height: 80px;
   width: 200px;
-  margin: 10% 75% 0 0;
+  margin: 10% 0 0 40px;
 }
+
+.exitButton {
+  margin-left: 10px;
+  color: red;
+}
+
 @font-face {
-  font-family: 'Vazir';
-  src: url('../../../fonts/Vazir-Bold.eot');
-  src: url('../../../fonts/Vazir-Bold.ttf');
-  src: url('../../../fonts/Vazir-Bold.woff');
+  font-family: 'Yekan';
+  src: url('../../../fonts/Vazir-Medium.eot');
+  src: url('../../../fonts/Vazir-Medium.ttf');
+  src: url('../../../fonts/Vazir-Medium.woff');
 }
 
 body {

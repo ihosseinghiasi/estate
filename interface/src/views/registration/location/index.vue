@@ -2,9 +2,9 @@
   <div class="Location">
     <Header />
     <div class="flex-container">
-      <div class="rightToLeft" style="height: 70vh">
+      <div class="rightToLeft" style="height: 60vh">
         <div class="searchLocation g-col-6">
-          <b-form-input v-model="text" placeholder="نام محله"></b-form-input>
+          <b-form-select :options="options" v-model="selected" @change="goToNewLocation()"> </b-form-select>
         </div>
         <div class="addressDetailsArea rightToLeft">
           <label for="textAddress">توضیحات آدرس :</label>
@@ -14,11 +14,12 @@
           ></textarea>
         </div>
       </div>
-      <div id="lMap" class="map"></div>
+      <div id="lMap" class="map" :zoom="zoom"></div>
     </div>
     <div class="locationDirectionArea">
-      <router-link to="/reg/details">
+      <router-link to="/reg/images">
         <b-button variant="outline-info"> صفحه بعد </b-button>
+        <b-button class="exitButton" variant="light" to="/"> خروج </b-button>
       </router-link>
     </div>
   </div>
@@ -32,7 +33,7 @@
 ></script>
 
 <script>
-import Header from '../../../../layouts/Header';
+import Header from '../../../../layouts/HeaderWithoutButton';
 import 'leaflet/dist/leaflet.css';
 import L, {Icon, layerGroup} from 'leaflet';
 export default {
@@ -41,50 +42,50 @@ export default {
   data() {
     return {
       map: null,
-      zoom: 13,
-      center: [35.6892, 51.389],
+      maxzoom: 30,
+      zoom: 17,
+      center: [35.700847, 51.391025],
       markerGroup: null,
-      clickMarkers: null,
-      cities: ['ونک', 'سلسبیل', 'نیاوران', 'نظام آباد', 'شهرک غرب'],
+      clickMarker: [null, null],
+      selected: null,
+      options: [
+        {text: 'محله های تهران . . .', value: null},
+        {text: 'نیاوران', value: [35.817723, 51.471472]},
+        {text: 'قلهک', value: [35.773866, 51.444088]},
+      ],
     };
   },
 
   mounted() {
     this.leafletGraph();
-    this.clickMap();
+    this.addMarker();
   },
 
   methods: {
-    // findAddress() {
-    //   let url = 'https://nominatim.openstreetmap.org/search?q=' + 'tehran';
-    //   fetch(url)
-    //     .then(response => response.json())
-    //     .catch(err => console.log(err));
-    // },
-
     leafletGraph() {
-      this.map = L.map('lMap').setView([35.6892, 51.389], 13);
+      this.map = L.map('lMap').setView(this.center, this.zoom);
       L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        attribution: '&copy; <a href="http://osm.org/copyright">محله</a>Tehran',
       }).addTo(this.map);
-      this.markerGroup = L.layerGroup().addTo(this.map);
     },
-    beforeDestroy() {
-      if (this.map) {
-        this.map.remove();
-      }
-    },
-    clickMap() {
+
+    addMarker() {
       this.map.on('click', ev => {
-        this.markerGroup.clearLayers();
-        this.clickMarkers = L.marker([ev.latlng.lat, ev.latlng.lng], {
+        if(this.clickMarker != null) {
+          this.map.removeLayer(this.clickMarker);
+        }
+        this.clickMarker = new L.marker([ev.latlng.lat, ev.latlng.lng], {
           draggable: true,
-        }).addTo(this.markerGroup);
+        }).addTo(this.map);
+                  alert(clickMarker)
+
       });
     },
-  },
-};
+    goToNewLocation() {
+      this.map.flyTo(this.selected, 17);
+      }
+},
+  };
 </script>
 
 <style>
@@ -113,7 +114,7 @@ export default {
 }
 
 .searchLocation {
-  margin: 10% 25%;
+  margin: 50px 200px;
 }
 
 .addressDetailsArea {
@@ -138,6 +139,21 @@ textarea {
   position: relative;
   height: 50px;
   width: 200px;
-  margin: -5.5% 75% 0 0;
+  margin: -110px 0 0 40px;
+}
+
+.districtSelect {
+  width: 100%;
+  margin-left: 10px;
+  margin-top: 100px;
+}
+
+.exitButton {
+  margin-left: 10px;
+  color: red;
+}
+
+body {
+  font-family: Vazir;
 }
 </style>

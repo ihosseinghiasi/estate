@@ -16,7 +16,7 @@
         <div class="d-flex flex-row">
           <div class="col-4 dualSpace">
             <label for="rooms">تعداد اتاق</label>
-            <b-form-spinbutton id="rooms" v-model="spnrooms" min="0" max="20">
+            <b-form-spinbutton id="rooms" v-model="spnRooms" min="0" max="20">
             </b-form-spinbutton>
           </div>
         </div>
@@ -26,13 +26,13 @@
             <div class="col-4">
               <b-form-input
                 id="ageOfHome"
-                v-model="text"
+                v-model="txtAge"
                 placeholder="سن بنا"
               ></b-form-input>
             </div>
             <div style="margin-right: 10px">
               <b-form-checkbox
-                v-model="chkAge"
+                v-model="chkNew"
                 name="check-button"
                 button-variant="outline-info"
                 button
@@ -43,18 +43,18 @@
           </div>
         </div>
         <div style="margin-right: 20px; margin-top: 5px">
-          <label for="ageOfHome">رهن</label>
+          <label for="rent">رهن</label>
           <div class="d-flex flex-row">
             <div class="col-5">
               <b-form-input
-                id="ageOfHome"
+                id="rent"
                 v-model="txtMortgage"
                 placeholder="رهن به تومان"
               ></b-form-input>
             </div>
             <div style="margin-right: 10px">
               <b-form-checkbox
-                v-model="chkAge"
+                v-model="chkAgreement"
                 name="check-button"
                 button-variant="outline-info"
                 button
@@ -273,25 +273,42 @@
     <div class="rentDirectionArea">
       <router-link to="/reg/location">
         <b-button variant="outline-info"> صفحه بعد </b-button>
+        <b-button class="exitButton" variant="light" to="/"> خروج </b-button>
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import Header from '../../../../layouts/Header';
+import Header from '../../../../layouts/HeaderWithoutButton';
 export default {
   el: '#rentDetails',
   name: 'Rent',
   components: {Header},
   data() {
     return {
-      rooms: 1,
-      checkedAge: false,
-      txtMortgage: '',
+      txtMeter: '',
+      spnRooms: 1,
+      txtAge: '',
+      chkNew: false,
+      chkFullMortage: false,
       txtRent: '',
-      txtmeter: '',
-      spnrooms: '',
+      txtMortgage: '',
+      chkAgreement: false,
+      chkElevator: false,
+      chkParking: false,
+      chkRemoteDoor: false,
+      chkStore: false,
+      chkLabi: false,
+      chkSecurity: false,
+      chkGym: false,
+      chkCentralAntenna: false,
+      chkBalcony: false,
+      chkSwimming: false,
+      chkSauna: false,
+      chkًRoofGarden: false,
+      chkJacuzzi: false,
+      chkConference: false,
     };
   },
 };
@@ -359,7 +376,12 @@ export default {
   position: relative;
   height: 50px;
   width: 200px;
-  margin: 33% 75% 0 0;
+  margin: 33% 0 0 40px;
+}
+
+.exitButton {
+  margin-left: 10px;
+  color: red;
 }
 
 input[type='checkbox'] {

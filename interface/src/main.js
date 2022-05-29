@@ -1,21 +1,21 @@
-import 'leaflet/dist/leaflet.css';
-
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
 import {
-  BootstrapVue,
-  IconsPlugin,
-} from 'bootstrap-vue'
-import { FormRadioPlugin } from 'bootstrap-vue'
-
-
+  BootstrapVue, FormRadioPlugin, IconsPlugin
+} from 'bootstrap-vue';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 // Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+import 'bootstrap/dist/css/bootstrap.css';
+import JQuery from 'jquery';
 import { Icon } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+window.$ = JQuery
+
+
+
+
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({

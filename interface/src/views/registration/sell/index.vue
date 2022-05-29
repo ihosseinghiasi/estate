@@ -8,15 +8,17 @@
             <label for="meter">متراژ</label>
             <b-form-input
               id="meter"
-              v-model="text"
+              v-model="txtMeter"
               placeholder="متراژ"
-            ></b-form-input>
+              @click="convertTest()"
+            >
+            </b-form-input>
           </div>
         </div>
         <div class="d-flex flex-row">
           <div class="col-4 dualSpace">
             <label for="rooms">تعداد اتاق</label>
-            <b-form-spinbutton id="rooms" v-model="rooms" min="0" max="20">
+            <b-form-spinbutton id="rooms" v-model="spnRooms" min="0" max="20">
             </b-form-spinbutton>
           </div>
         </div>
@@ -28,7 +30,7 @@
                 :disabled="txtAgeDisable"
                 id="ageOfHome"
                 v-model="txtAge"
-                placeholder="سن بنا"
+                placeholder="مترمربع"
               ></b-form-input>
             </div>
             <div style="margin-right: 10px">
@@ -250,26 +252,43 @@
     </div>
 
     <div class="rentDirectionArea">
-      <router-link to="/reg/images">
+      <router-link to="/reg/location">
         <b-button variant="outline-info"> صفحه بعد </b-button>
+        <b-button class="exitButton" variant="light" to="/"> خروج </b-button>
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import Header from '../../../../layouts/Header';
+import Header from '../../../../layouts/HeaderWithoutButton';
+import {convertDigits} from 'persian-helpers';
 export default {
   el: '#sellDetails',
   name: 'Sell',
   components: {Header},
   data() {
     return {
-      rooms: 1,
-      txtPrice: '',
-      chkAgreement: false,
+      txtMeter: 10,
+      spnRooms: 1,
       txtAge: '',
       chkNew: false,
+      txtPrice: '',
+      chkAgreement: false,
+      chkElevator: false,
+      chkParking: false,
+      chkRemoteDoor: false,
+      chkStore: false,
+      chkLabi: false,
+      chkSecurity: false,
+      chkGym: false,
+      chkCentralAntenna: false,
+      chkBalcony: false,
+      chkSwimming: false,
+      chkSauna: false,
+      chkًRoofGarden: false,
+      chkJacuzzi: false,
+      chkConference: false,
     };
   },
 
@@ -282,9 +301,15 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted: function () {
+    this.txtMeter.value = convertDigits(this.txtMeter);
+  },
 
-  methods: {},
+  methods: {
+    convertTest: function () {
+      this.txtMeter.value = convertDigits(this.txtMeter);
+    },
+  },
 };
 </script>
 
@@ -350,10 +375,20 @@ export default {
   position: relative;
   height: 50px;
   width: 200px;
-  margin: 33% 75% 0 0;
+  margin: 33% 0 0 40px;
+}
+
+.exitButton {
+  margin-left: 10px;
+  color: red;
 }
 
 input[type='checkbox'] {
   display: none;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('../../../fonts/Vazir-Medium.ttf');
 }
 </style>
